@@ -19,6 +19,7 @@
 #include "ActsExamples/Io/Csv/CsvTrackParameterReader.hpp"
 #include "ActsExamples/Io/Root/RootAthenaDumpReader.hpp"
 #include "ActsExamples/Io/Root/RootAthenaNTupleReader.hpp"
+#include "ActsExamples/Io/Root/RootAthenaNTupleReaderNaive.hpp"
 #include "ActsExamples/Io/Root/RootMaterialTrackReader.hpp"
 #include "ActsExamples/Io/Root/RootParticleReader.hpp"
 #include "ActsExamples/Io/Root/RootSimHitReader.hpp"
@@ -95,6 +96,13 @@ void addInput(Context& ctx) {
                              inputFilePath, outputTrackParameters,
                              outputTruthVtxParameters, outputRecoVtxParameters,
                              outputBeamspotConstraint);
+
+  ACTS_PYTHON_DECLARE_READER(ActsExamples::RootAthenaNTupleReaderNaive, mex,
+                             "RootAthenaNTupleReaderNaive", inputTreeName,
+                             inputFilePath, outputTrackParameters,
+                             outputTruthVtxParameters,
+			     outputRecoVtxParameters,
+			     outputRecoHSTrackInfo, outputTruthHSTrackInfo);
 
   ACTS_PYTHON_DECLARE_READER(
       ActsExamples::RootAthenaDumpReader, mex, "RootAthenaDumpReader", treename,

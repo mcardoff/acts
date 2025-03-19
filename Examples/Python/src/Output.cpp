@@ -40,6 +40,7 @@
 #include "ActsExamples/Io/Root/RootTrackStatesWriter.hpp"
 #include "ActsExamples/Io/Root/RootTrackSummaryWriter.hpp"
 #include "ActsExamples/Io/Root/RootVertexWriter.hpp"
+#include "ActsExamples/Io/Root/RootVertexWriterNaive.hpp"
 #include "ActsExamples/Io/Root/SeedingPerformanceWriter.hpp"
 #include "ActsExamples/Io/Root/TrackFinderNTupleWriter.hpp"
 #include "ActsExamples/Io/Root/TrackFinderPerformanceWriter.hpp"
@@ -202,6 +203,11 @@ void addOutput(Context& ctx) {
   ACTS_PYTHON_DECLARE_WRITER(ActsExamples::RootVertexWriter, mex,
                              "RootVertexWriter", inputVertices, filePath,
                              fileMode, treeName);
+  ACTS_PYTHON_DECLARE_WRITER(ActsExamples::RootVertexWriterNaive, mex,
+                             "RootVertexWriterNaive", inputVertices,
+			     inputTruthVertices, inputRecoVertices,
+			     inputRecoHSTrackInfo, inputTruthHSTrackInfo,
+			     filePath, fileMode, treeName);
 
   ACTS_PYTHON_DECLARE_WRITER(ActsExamples::TrackFinderNTupleWriter, mex,
                              "TrackFinderNTupleWriter", inputTracks,
