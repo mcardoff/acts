@@ -20,8 +20,10 @@ add_library(
     src/RootTrackSummaryWriter.cpp
     src/RootBFieldWriter.cpp
     src/RootAthenaNTupleReader.cpp
+    src/RootAthenaNTupleReaderNaive.cpp
     src/RootVertexReader.cpp
     src/RootVertexWriter.cpp
+    src/RootVertexWriterNaive.cpp
     src/RootAthenaDumpReader.cpp
     src/RootNuclearInteractionParametersWriter.cpp
     src/detail/NuclearInteractionParametrisation.cpp
