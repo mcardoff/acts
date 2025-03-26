@@ -222,11 +222,6 @@ void addOutput(Context& ctx) {
                              trackSummaryPlotToolConfig);
 
   ACTS_PYTHON_DECLARE_WRITER(
-      ActsExamples::SeedingPerformanceWriter, mex, "SeedingPerformanceWriter",
-      inputSeeds, inputMeasurementParticlesMap, inputParticles, filePath,
-      fileMode, effPlotToolConfig, duplicationPlotToolConfig);
-
-  ACTS_PYTHON_DECLARE_WRITER(
       ActsExamples::RootTrackParameterWriter, mex, "RootTrackParameterWriter",
       inputTrackParameters, inputProtoTracks, inputParticles, inputSimHits,
       inputMeasurementParticlesMap, inputMeasurementSimHitsMap, filePath,
