@@ -17,15 +17,15 @@ from acts.examples.odd import getOpenDataDetector, getOpenDataDetectorDirectory
 
 # acts.examples.dump_args_calls(locals())  # show python binding calls
 
-s = acts.examples.Sequencer(numThreads=-1)
+s = acts.examples.Sequencer(numThreads=1)
 u = acts.UnitConstants
 field = acts.ConstantBField(acts.Vector3(0, 0, 2 * u.T))
 global_logging_level = acts.logging.INFO
 
-beam_pos = acts.Vector3([50*u.um, 50*u.um, 1e2])
-beam_cov = acts.SquareMatrix3([[50*u.um, 0, 0],
-                               [0, 50*u.um, 0],
-                               [0, 0, 100.0]])
+# beam_pos = acts.Vector3([50*u.um, 50*u.um, 1e2])
+# beam_cov = acts.SquareMatrix3([[50*u.um, 0, 0],
+                               # [0, 50*u.um, 0],
+                               # [0, 0, 100.0]])
 
 NTupleReaderConfig = namedtuple(
     "Config",
@@ -44,7 +44,7 @@ NTupleReaderConfig = namedtuple(
 ntuple_config = NTupleReaderConfig(
     # inputs
     inputTreeName="ntuple",
-    inputFilePath="/Users/mcardiff/Public/SLAC/ACTS/acts/Examples/Scripts/Python/ntuple/user.scheong.42774615.EXT0._000010.CaloTimingNtuple.root",
+    inputFilePath="~/Projects/ntuple/user.scheong.42871997.Output._000031.SuperNtuple.root", # currently this is the VBF H -> inv sample
     # track parameters
     outputTrackParameters="trackParameters",
     # truth vertex info
@@ -86,7 +86,7 @@ amvf_config = AMVFConfig(
     outputProtoVertices="outputProtoVertices",
     outputVertices="outputVertices",
     bField=field,
-    seedFinder=acts.VertexSeedFinder.GaussianSeeder,,
+    seedFinder=acts.VertexSeedFinder.GaussianSeeder,
     useTime=False,
 )
 
@@ -111,7 +111,7 @@ writer_config = RootVertexWriterConfig(
     inputTruthHSTrackInfo=ntuple_config.outputTruthHSTrackInfo,
     inputRecoVertices=ntuple_config.outputRecoVtxParameters,
     inputRecoHSTrackInfo=ntuple_config.outputRecoHSTrackInfo,
-    filePath='./amvf_testbeamspot.root', # be sure to include extension
+    filePath='./amvf_test.root', # be sure to include extension
     treeName='tree',
 )
 
@@ -150,7 +150,7 @@ findVertices = AdaptiveMultiVertexFinderAlgorithm(
     ),
 )
 
-s.addAlgorithm(findVertices)
+# s.addAlgorithm(findVertices)
 
 rootVertexWriter = RootVertexWriterNaive(
     level=global_logging_level,
@@ -168,6 +168,6 @@ rootVertexWriter = RootVertexWriterNaive(
 
 
 # add vertexwriter
-s.addWriter(rootVertexWriter)
+# s.addWriter(rootVertexWriter)
 
 s.run()

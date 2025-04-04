@@ -104,8 +104,13 @@ ActsExamples::RootAthenaNTupleReaderNaive::RootAthenaNTupleReaderNaive(
   m_inputChain->SetBranchAddress("RecoVtx_y", &m_branches.recovertex_y);
   m_inputChain->SetBranchAddress("RecoVtx_z", &m_branches.recovertex_z);
 
+  m_inputChain->SetBranchAddress("Track_nPixelHits",  &m_branches.track_hits_pixel);
+  m_inputChain->SetBranchAddress("Track_nStripHits",  &m_branches.track_hits_strip);
+  m_inputChain->SetBranchAddress("Track_nPixelHoles",  &m_branches.track_hole_pixel);
+
   m_inputChain->SetBranchAddress("Track_truthVtx_idx", &m_branches.track_truthvtx_idx);
   m_inputChain->SetBranchAddress("Track_recoVtx_idx",  &m_branches.track_recovtx_idx);
+
 
   ACTS_DEBUG("!!!!!!!!SET NEW :3");
 
@@ -238,38 +243,38 @@ ActsExamples::ProcessCode ActsExamples::RootAthenaNTupleReaderNaive::read(
     // sigma(z_0sin(theta)) < 2.5 mm
 
 
-    double theta = (*m_branches.track_var_theta)[i];
-    double sinsqth = std::sin(theta)*std::sin(theta);
-    double varz0 = (*m_branches.track_var_z0)[i]*(*m_branches.track_var_z0)[i];
-    double varth = (*m_branches.track_var_theta)[i]*(*m_branches.track_var_theta)[i];
-    int nPixelHits = (*m_branches.track_hits_pixel)[i];
-    int nStripHits (*m_branches.track_hits_strip)[i];
-    int nSiHits = nPixelHits + nStripHits;
-    int nPixelHole = (*m_branches.track_hole_strip)[i];
-    double pT = (*m_branches.track_pT)[i];
-    double d0 = (*m_branches.track_d0)[i];
-    double z0 = (*m_branches.track_z0)[i];
-    double sd0 = std::sqrt((*m_branches.track_var_z0)[i]);
-    double sz0sin = std::sqrt(sinsqth*varz0 + z0*z0*(1-sinsqth)*varth);
+    // double theta = (*m_branches.track_var_theta)[i];
+    // double sinsqth = std::sin(theta)*std::sin(theta);
+    // double varz0 = (*m_branches.track_var_z0)[i];
+    // double varth = (*m_branches.track_var_theta)[i];
+    // int nPixelHits = (*m_branches.track_hits_pixel)[i];
+    // int nStripHits = (*m_branches.track_hits_strip)[i];
+    // int nSiHits = nPixelHits + nStripHits;
+    // int nPixelHole = (*m_branches.track_hole_pixel)[i];
+    // double pT = (*m_branches.track_pt)[i];
+    // double d0 = (*m_branches.track_d0)[i];
+    // double z0 = (*m_branches.track_z0)[i];
+    // double sd0 = std::sqrt((*m_branches.track_var_z0)[i]);
+    // double sz0sin = std::sqrt(sinsqth*varz0 + z0*z0*(1-sinsqth)*varth);
 
-    bool pixel_hits_cut = nPixelHits > 3;
-    bool pixel_hole_cut = nPixelHole <= 1;
-    bool strip_hits_cut = nStripHits >= 0;
-    bool si_hits_cut = nSiHits >= 7;
-    bool pt_cut = pT > 0.9;
-    bool d0_cut = std::abs(d0) < 1.0;
-    bool sd0_cut = sd0 < 0.35;
-    bool sz0_cut = sz0sin < 2.5;
-    bool all_cuts = pixel_hits_cut && pixel_hole_cut && strip_hits_cut && si_hits_cut && pt_cut && d0_cut && sd0_cut && sz0_cut;
+    // bool pixel_hits_cut = nPixelHits > 3;
+    // bool pixel_hole_cut = nPixelHole <= 1;
+    // bool strip_hits_cut = nStripHits >= 0;
+    // bool si_hits_cut = nSiHits >= 7;
+    // bool pt_cut = pT > 0.9;
+    // bool d0_cut = std::abs(d0) < 1.0;
+    // bool sd0_cut = sd0 < 0.35;
+    // bool sz0_cut = sz0sin < 2.5;
+    // bool all_cuts = pixel_hits_cut && pixel_hole_cut && strip_hits_cut && si_hits_cut && pt_cut && d0_cut && sd0_cut && sz0_cut;
     
       
-    if (all_cuts) {
+    // if (all_cuts) {
       // TODO we do not have a hypothesis at hand here. defaulting to pion
       Acts::BoundTrackParameters tc(surface, params, cov,
 				    Acts::ParticleHypothesis::pion());
       trackContainer.push_back(tc);
-    }
-    // already looping over tracks, might as well extract information
+    // }
+    // already looping over tracks, might as well extract hs information
 
     // if this track ~ truth HS Vertex
     if((*m_branches.track_truthvtx_idx)[i] == 0) { 

@@ -156,7 +156,6 @@ class RootAthenaNTupleReaderNaive : public ActsExamples::IReader {
     std::vector<float>* track_t;
     std::vector<float>* track_pt;
     std::vector<float>* track_eta;
-    // std::vector<float>* track_z;
 
     std::vector<float>* track_var_d0;
     std::vector<float>* track_var_z0;
@@ -187,6 +186,11 @@ class RootAthenaNTupleReaderNaive : public ActsExamples::IReader {
     // vec[i] == j, trk i is from vtx j
     std::vector<float>* track_recovtx_idx;
     std::vector<float>* track_truthvtx_idx;
+
+    // other info we need to apply track cuts
+    std::vector<int>* track_hits_pixel;
+    std::vector<int>* track_hits_strip;
+    std::vector<int>* track_hole_pixel;
     
     // keeping these here because the structure of the vertex vectors
     // they are ordered such that the first entry (index 0) is the HS vertex
