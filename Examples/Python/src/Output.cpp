@@ -40,7 +40,6 @@
 #include "ActsExamples/Io/Root/RootTrackStatesWriter.hpp"
 #include "ActsExamples/Io/Root/RootTrackSummaryWriter.hpp"
 #include "ActsExamples/Io/Root/RootVertexWriter.hpp"
-#include "ActsExamples/Io/Root/RootVertexWriterNaive.hpp"
 #include "ActsExamples/Io/Root/SeedingPerformanceWriter.hpp"
 #include "ActsExamples/Io/Root/TrackFinderNTupleWriter.hpp"
 #include "ActsExamples/Io/Root/TrackFinderPerformanceWriter.hpp"
@@ -49,6 +48,8 @@
 #include "ActsExamples/MaterialMapping/IMaterialWriter.hpp"
 #include "ActsExamples/TrackFinding/ITrackParamsLookupReader.hpp"
 #include "ActsExamples/TrackFinding/ITrackParamsLookupWriter.hpp"
+
+#include "ActsExamples/Io/Root/RootVertexWriterNaive.hpp"
 
 #include <memory>
 #include <string>
