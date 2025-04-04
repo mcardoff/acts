@@ -152,10 +152,6 @@ findVertices = AdaptiveMultiVertexFinderAlgorithm(
 
 s.addAlgorithm(findVertices)
 
-# try to dump all of this into another root file??
-# Problem :: expect SimVertexCollection in writer,
-# but AMVF provides a VertexCollection
-# Solution :: change to RootVertexWriterNaive, custom built
 rootVertexWriter = RootVertexWriterNaive(
     level=global_logging_level,
     **acts.examples.defaultKWArgs(

@@ -18,6 +18,7 @@
 #include "ActsExamples/Framework/AlgorithmContext.hpp"
 #include "ActsExamples/Io/Root/RootUtility.hpp"
 
+#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <optional>
@@ -226,11 +227,48 @@ ActsExamples::ProcessCode ActsExamples::RootAthenaNTupleReaderNaive::read(
         (*m_branches.track_cov_tehtaqOverP)[i];
     ACTS_DEBUG("Set Covariances");
 
-    // TODO we do not have a hypothesis at hand here. defaulting to pion
-    Acts::BoundTrackParameters tc(surface, params, cov,
-                                  Acts::ParticleHypothesis::pion());
-    trackContainer.push_back(tc);
+    // Need to implement the following track selections
+    // Pixel Hits >= 3
+    // Pixel Holes <= 1
+    // Strip Hits >= 0
+    // Tot. Si Hits >= 7
+    // pT > 900 MeV
+    // |d_0| < 1.0 mm
+    // sigma(d_0) < 0.35 mm
+    // sigma(z_0sin(theta)) < 2.5 mm
 
+
+    double theta = (*m_branches.track_var_theta)[i];
+    double sinsqth = std::sin(theta)*std::sin(theta);
+    double varz0 = (*m_branches.track_var_z0)[i]*(*m_branches.track_var_z0)[i];
+    double varth = (*m_branches.track_var_theta)[i]*(*m_branches.track_var_theta)[i];
+    int nPixelHits = (*m_branches.track_hits_pixel)[i];
+    int nStripHits (*m_branches.track_hits_strip)[i];
+    int nSiHits = nPixelHits + nStripHits;
+    int nPixelHole = (*m_branches.track_hole_strip)[i];
+    double pT = (*m_branches.track_pT)[i];
+    double d0 = (*m_branches.track_d0)[i];
+    double z0 = (*m_branches.track_z0)[i];
+    double sd0 = std::sqrt((*m_branches.track_var_z0)[i]);
+    double sz0sin = std::sqrt(sinsqth*varz0 + z0*z0*(1-sinsqth)*varth);
+
+    bool pixel_hits_cut = nPixelHits > 3;
+    bool pixel_hole_cut = nPixelHole <= 1;
+    bool strip_hits_cut = nStripHits >= 0;
+    bool si_hits_cut = nSiHits >= 7;
+    bool pt_cut = pT > 0.9;
+    bool d0_cut = std::abs(d0) < 1.0;
+    bool sd0_cut = sd0 < 0.35;
+    bool sz0_cut = sz0sin < 2.5;
+    bool all_cuts = pixel_hits_cut && pixel_hole_cut && strip_hits_cut && si_hits_cut && pt_cut && d0_cut && sd0_cut && sz0_cut;
+    
+      
+    if (all_cuts) {
+      // TODO we do not have a hypothesis at hand here. defaulting to pion
+      Acts::BoundTrackParameters tc(surface, params, cov,
+				    Acts::ParticleHypothesis::pion());
+      trackContainer.push_back(tc);
+    }
     // already looping over tracks, might as well extract information
 
     // if this track ~ truth HS Vertex
